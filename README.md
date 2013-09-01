@@ -27,6 +27,20 @@ Let's dive into an example
 
 	[ok]
 
+This should generate the following HTML when compiled ( make test )
+
+	Choose an Email ?
+	<input type="text" name="Choose an Email ?"/>
+	<BR>
+	Choose a password
+	<input type="password" name="Choose a password"/>
+	<BR>
+	Describe why you want to register
+	<textarea name="Describe why you want to register"><textarea>	
+	<BR>
+	<input type="button" value="ok" />
+
+
 Currently Markup supports
 
 - Text Input( single line input)

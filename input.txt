@@ -1,12 +1,11 @@
-what is your name?
+Choose an Email ?
+_____
+
+Choose a password
+******
+
+Describe why you want to register
 ____
-
-
-describe
-__
-__
-
-gender
-female/male
+_____
 
 [ok]
