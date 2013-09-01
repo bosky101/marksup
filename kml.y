@@ -5,6 +5,7 @@ extern int yylineno;
 extern void yyerror(const char *str);
 
 char *value="";
+int paraStarted=0;
 
 void yyerror(const char *str)
 {
@@ -34,6 +35,7 @@ main()
 %token <string> P_START
 %token <string> BR
 %token <string> SPACE
+%token <string> SLASH
 %%
 
 elements: /* empty */
@@ -51,25 +53,11 @@ element:
 	|
 	div
 	|
+	radios
+	|
 	br
        	;
 
-p_start:
-    BR BR
-    |
-    P_START
-    {
-      //printf("para start: %s\n",$1);
-      $1=0;
-    }
-    ;
-
-p:
-    VALUE br
-    {
-      printf("para %s? \n",value);
-    }
-    ;
 div:
         value spacer 
 	|
@@ -83,7 +71,7 @@ value:
        VALUE
        {
 	 value=$1;
-	 printf("%s\n",$1);
+	 printf("value:%s\n",$1);
        }
        ;
 
@@ -91,12 +79,15 @@ spacer:
         BR
 	|
 	SPACE
-        {printf("%s",$1);};
+        {
+	  
+	  printf("sdasd %s",$1);
+	};
 
 textarea:
 	TEXTAREA
 	{
-		printf("\tsome textarea\n");
+	  printf("<textarea name=\"%s\"><textarea>",value);
 	}
 	;
 
@@ -110,7 +101,7 @@ textfield:
 password:
 	PASSWORD
 	{
-		printf("\tpassword\n");
+	  printf("<input type=\"password\" name=\"%s\"/>",$1);
 	}
 	;
 
@@ -122,10 +113,25 @@ button:
 	}
 	;
 
+radios:
+        radios radio
+	{};
+
+radio:
+        SLASH
+	|
+	SLASH VALUE
+	|
+	VALUE SLASH
+	{
+	  printf("choices!");
+	}
+	;
+
 br:
 	BR
 	{
-		printf("\n<BR>\n");
+	  printf("\n<BR>\n");
 	}
 	;
 
