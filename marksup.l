@@ -6,15 +6,16 @@
 br [\n]
 textfield [_][_]+
 password [\*][\*]+
+alpha [a-zA-Z]
 div [^\n]+
 %%
-[[^[]]+]	return BUTTON;
-%%
+[a-zA-Z0-9][^/\[\]\n]+ yylval.string=strdup(yytext); return VALUE;
+[\/] return SLASH;
+[\[] return SQ_START;
+[\]] return SQ_END;
 {textfield}	return TEXTFIELD;
 {textfield}{br}{textfield}+	return TEXTAREA;
 {password}	return PASSWORD;
-{br}	return BR;
-{br}{div}{br}	return P;
-{div}	return DIV;
-[ ]	;
-.	;
+{br}+	  return BR;
+[ \t\n]+  ;
+%%

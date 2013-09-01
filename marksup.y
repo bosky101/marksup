@@ -81,7 +81,7 @@ spacer:
 	SPACE
         {
 	  
-	  printf("sdasd %s",$1);
+	  printf("%s",$1);
 	};
 
 textarea:
@@ -118,11 +118,9 @@ radios:
 	{};
 
 radio:
-        SLASH
-	|
-	SLASH VALUE
-	|
-	VALUE SLASH
+        VALUE SLASH radio
+	| 
+	
 	{
 	  printf("choices!");
 	}
