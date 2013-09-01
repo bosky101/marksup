@@ -4,6 +4,8 @@
 extern int yylineno;
 extern void yyerror(const char *str);
 
+char *value="";
+
 void yyerror(const char *str)
 {
   //	fprintf(stderr,"error: %s\n",str);
@@ -21,11 +23,11 @@ main()
 }
 
 %}
-
+%start elements
 %token TEXTAREA
 %token TEXTFIELD 
 %token PASSWORD
-%token BUTTON VALUE
+%token BUTTON
 %token SQ_START VALUE SQ_END
 %token P
 %token DIV
@@ -33,12 +35,11 @@ main()
 %%
 
 elements: /* empty */
-	| elements element
+        | elements element
 	;
 
-
 element:
-	textfield
+     	textfield
 	|
 	password
 	|
@@ -46,26 +47,12 @@ element:
 	|
 	button
 	|
-	br
-	|
 	p
 	|
 	div
-	;
-
-p:
-     	P
-	{
-		printf("\tsome paragraph\n");
-	}
-	;
-
-div:
-	DIV
-	{
-	  printf("\tsome div\n");
-	}
-	;
+	|
+	br
+       	;
 
 textarea:
 	TEXTAREA
@@ -89,9 +76,23 @@ password:
 	;
 
 button:
-	BUTTON
+	SQ_START VALUE SQ_END
 	{
-		printf("\tbutton\n");
+	  printf("\tbutton %s\n",value);
+	}
+	;
+
+div:
+	DIV
+	{
+	  printf("\t<div>\n");
+	}
+	;
+
+p:
+	P
+	{
+		printf("\t<P>\n");
 	}
 	;
 
