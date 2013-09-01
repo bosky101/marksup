@@ -1,0 +1,80 @@
+%{
+#include <stdio.h>
+#include <string.h>
+extern int yylineno;
+extern void yyerror(const char *str);
+
+void yyerror(const char *str)
+{
+	fprintf(stderr,"error: %s\n",str);
+  //	fprintf(stderr," Syntax Error in Line : %d : %s\n",yylineno,str);
+}
+
+int yywrap()
+{
+	return 1;
+}
+
+main()
+{
+	yyparse();
+}
+
+%}
+
+%token TEXTAREA TEXTFIELD PASSWORD BUTTON VALUE SQ_START SQ_END P DIV BR
+
+%%
+
+elements: /* empty */
+	| elements element
+	;
+
+
+element:
+	p
+	|
+	div
+	|
+	textfield
+	|
+	textarea
+	|
+	button
+	;
+
+p:
+	P
+	{
+		printf("\tsome paragraph\n");
+	}
+	;
+
+div:
+	div
+	{
+		printf("\tsome div\n");
+	}
+	;
+
+textarea:
+	TEXTAREA
+	{
+		printf("\tsome textarea\n");
+	}
+	;
+
+textfield:
+	TEXTFIELD
+	{
+		printf("\tTextfield\n");
+	}
+	;
+
+button:
+	BUTTON
+	{
+		printf("\tbutton\n");
+	}
+	;
+

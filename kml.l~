@@ -1,0 +1,18 @@
+%{
+#include <stdio.h>
+#include "y.tab.h"
+%}
+
+%%
+BR	[\n]
+%%
+[[^[]]+]	return BUTTON;
+{TEXTFIELD}{BR}{TEXTFIELD}+	return TEXTAREA;
+[_][_]+	return TEXTFIELD;
+[\*][\*]+	return PASSWORD;
+\n	return BR;
+{BR}<DIV>{BR}	return P;
+[.]+{BR}	return DIV;
+[ ]	return EMPTY;
+<EMPTY>.	;
+%%
