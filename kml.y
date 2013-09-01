@@ -23,15 +23,17 @@ main()
 }
 
 %}
+%union{
+  char *string;
+}
 %start elements
-%token TEXTAREA
-%token TEXTFIELD 
-%token PASSWORD
-%token BUTTON
-%token SQ_START VALUE SQ_END
-%token P
-%token DIV
-%token BR
+%token <string> TEXTAREA
+%token <string> TEXTFIELD 
+%token <string> PASSWORD
+%token <string> SQ_START VALUE SQ_END
+%token <string> P_START
+%token <string> BR
+%token <string> SPACE
 %%
 
 elements: /* empty */
@@ -47,12 +49,49 @@ element:
 	|
 	button
 	|
-	p
-	|
 	div
 	|
 	br
        	;
+
+p_start:
+    BR BR
+    |
+    P_START
+    {
+      //printf("para start: %s\n",$1);
+      $1=0;
+    }
+    ;
+
+p:
+    VALUE br
+    {
+      printf("para %s? \n",value);
+    }
+    ;
+div:
+        value spacer 
+	|
+	value
+	{
+	 
+	}
+        ;
+
+value:
+       VALUE
+       {
+	 value=$1;
+	 printf("%s\n",$1);
+       }
+       ;
+
+spacer: 
+        BR
+	|
+	SPACE
+        {printf("%s",$1);};
 
 textarea:
 	TEXTAREA
@@ -64,7 +103,7 @@ textarea:
 textfield:
 	TEXTFIELD
 	{
-		printf("\tTextfield\n");
+	  printf("<input type=\"text\" name=\"%s\"/>",$1);
 	}
 	;
 
@@ -76,31 +115,28 @@ password:
 	;
 
 button:
-	SQ_START VALUE SQ_END
+	sq_start VALUE sq_end
 	{
-	  printf("\tbutton %s\n",value);
-	}
-	;
-
-div:
-	DIV
-	{
-	  printf("\t<div>\n");
-	}
-	;
-
-p:
-	P
-	{
-		printf("\t<P>\n");
+	  value=$2;
+	  printf("<input type=\"button\" value=\"%s\" />",value);
 	}
 	;
 
 br:
 	BR
 	{
-		printf("\t<BR>\n");
+		printf("\n<BR>\n");
 	}
 	;
 
+sq_start:
+        SQ_START
+	{
+	  //printf("found [\n");
+        };
 
+sq_end:
+        SQ_END
+	{
+	  //printf("found ]\n");
+        };
