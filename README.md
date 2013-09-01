@@ -1,8 +1,6 @@
-#MarkUp
+#MarksUp
 
-Markdown is known to render read-only text aptly.
-
-The goal of Markup is to create an intuitive language able to create form elements, where content might be more interactive. Hence the 'up'.
+The goal of Markup is to create an intuitive language able to create form elements, where content might be more interactive. Hence the 'up'. Markdown is known to render read-only text aptly, but has been Marksup's inspiration.
 
 With simplicity in mind, there are certain assumptions made:
 - Elements will be created top down, each element written on a new line
@@ -33,9 +31,10 @@ Currently Markup supports
 
 - Text Input( single line input)
 
-	_________
+	______
 
-- Text Area ( multi-line input), 
+- Text Area ( multi-line input)
+
 	______ ( use 2 or more consecutive lines of underscores )
 	______
 
@@ -45,7 +44,7 @@ Currently Markup supports
 
 - Button
 	
-	[caption] ( will create a button with the label caption )
+	\[caption\] ( will create a button with the label caption )
 
 Resources
 
